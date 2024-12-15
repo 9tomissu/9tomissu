@@ -1,0 +1,10 @@
+{
+    "type": "module",
+    "dependencies": {
+      "jsonfile": "^6.1.0",
+      "moment": "^2.29.1",
+      "simple-git": "^2.37.0",
+      "random": "^3.0.6"
+    }
+  }
+  
