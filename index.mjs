@@ -6,8 +6,8 @@ import random from 'random';
 const path = './data.json';
 
 const isValidDate = (date) => {
-    const startDate = moment('2023-01-01');
-    const endDate = moment('2024-12-30');
+    const startDate = moment('2022-01-01');
+    const endDate = moment('2022-12-30');
     return date.isBetween(startDate, endDate, null, '[]');
 };
 
@@ -24,10 +24,10 @@ const markCommits = async (n) => {
     const git = simpleGit();
 
     for (let i = 0; i < n; i++) {
-        const randomWeeks = random.int(0, 36 * 4);
+        const randomWeeks = random.int(0, 12 * 4);
         const randomDays = random.int(0, 6);
 
-        const randomDate = moment('2023-01-01')
+        const randomDate = moment('2022-01-01')
             .add(randomWeeks, 'weeks')
             .add(randomDays, 'days');
 
@@ -43,6 +43,6 @@ const markCommits = async (n) => {
     await git.push();
 };
 
-markCommits(500);
+markCommits(50);
 
 
