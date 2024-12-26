@@ -2,20 +2,20 @@ import jsonfile from 'jsonfile';
 import moment from 'moment';
 import simpleGit from 'simple-git';
 
-const path = './test.txt';
+const path = "./test4.txt";
 
 const markCommit = async (date, message) => {
     const data = { date: date.toISOString() };
     await jsonfile.writeFile(path, data);
 
     const git = simpleGit();
-    await git.add(path);
-    await git.commit(message, { '--date': date.toISOString() }); // Thêm message vào commit
+    await git.add([path]);
+    await git.commit(message, { "--date": date.toISOString() }); // Thêm message vào commit
 };
 
 const markCommits = async () => {
     const git = simpleGit();
-    const date = moment('2024-12-25T13:11:00');
+    const date = moment('2024-12-25');
     const commitMessage = 'Adding commit with specific date and message'; // Thông báo commit
 
     console.log(`Creating commit: ${date.toISOString()}`);
