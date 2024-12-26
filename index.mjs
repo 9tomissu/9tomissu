@@ -1,48 +1,28 @@
 import jsonfile from 'jsonfile';
 import moment from 'moment';
 import simpleGit from 'simple-git';
-import random from 'random';
 
-const path = './data.json';
+const path = './test.txt';
 
-const isValidDate = (date) => {
-    const startDate = moment('2022-01-01');
-    const endDate = moment('2022-12-30');
-    return date.isBetween(startDate, endDate, null, '[]');
-};
-
-const markCommit = async (date) => {
+const markCommit = async (date, message) => {
     const data = { date: date.toISOString() };
     await jsonfile.writeFile(path, data);
 
     const git = simpleGit();
     await git.add(path);
-    await git.commit(date.toISOString(), { '--date': date.toISOString() });
+    await git.commit(message, { '--date': date.toISOString() }); // Thêm message vào commit
 };
 
-const markCommits = async (n) => {
+const markCommits = async () => {
     const git = simpleGit();
+    const date = moment('2024-12-25T13:11:00');
+    const commitMessage = 'Adding commit with specific date and message'; // Thông báo commit
 
-    for (let i = 0; i < n; i++) {
-        const randomWeeks = random.int(0, 12 * 4);
-        const randomDays = random.int(0, 6);
+    console.log(`Creating commit: ${date.toISOString()}`);
+    await markCommit(date, commitMessage);
 
-        const randomDate = moment('2022-01-01')
-            .add(randomWeeks, 'weeks')
-            .add(randomDays, 'days');
-
-        if (isValidDate(randomDate)) {
-            console.log(`Creating commit: ${randomDate.toISOString()}`);
-            await markCommit(randomDate);
-        } else {
-            console.log(`Invalid date: ${randomDate.toISOString()}, skipping...`);
-        }
-    }
-
-    console.log('Pushing all commits...');
+    console.log(`Pushing all commits...`);
     await git.push();
 };
 
-markCommits(50);
-
-
+markCommits();
